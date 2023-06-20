@@ -12,14 +12,14 @@ namespace CHIETA_WebApp.Students
 {
     public partial class Section_C : System.Web.UI.Page
     {
-        string connectionString = "Data Source=TADI-C;Initial Catalog=ChietaDemo;Integrated Security=True";
+        
         public static List<string> Questions = new List<string>();
         int count = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            
             Questions.Clear();
-            SqlConnection conn = new SqlConnection(connectionString);
+            SqlConnection conn = new SqlConnection(DBmethods.connectionString);
             string cmdText = $"select Question_Text from Question where Section_ID = 'C'  ";
             SqlDataReader reader = null;
 

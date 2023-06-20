@@ -271,7 +271,7 @@ color: #FFFFFF;
             return number < 10 ? "0" + number : number;
         }
     </script>
-    <script>
+<%--    <script>
         // Define the number of questions
         const numQuestions = 0;
 
@@ -307,7 +307,7 @@ color: #FFFFFF;
             cardsContainer.appendChild(card);
         }
 
-    </script>                   
+    </script>                   --%>
 
          </div>
 
