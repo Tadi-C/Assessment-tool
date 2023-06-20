@@ -16,6 +16,8 @@ namespace CHIETA_WebApp.Students
 
         protected string OptionJson { get { return JsonConvert.SerializeObject(new string[] { "Option 1", "Option 2", "Option 3", "Option 4" }); } }
 
+        List<string> Questions = new List<string>();
+        
         protected void Page_Load(object sender, EventArgs e)
         {
 
