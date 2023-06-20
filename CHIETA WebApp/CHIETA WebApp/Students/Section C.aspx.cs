@@ -4,16 +4,74 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Data;
+using System.Data.SqlClient;
+using System.Text;
 
 namespace CHIETA_WebApp.Students
 {
     public partial class Section_C : System.Web.UI.Page
     {
-
-        protected string Question { get { return "The shaft end bearing on an electric motor in the plant has been replaced 3 times within a month. Use this given case scenario to:\\r\\n\\r\\n(i) Explain what root cause analysis is;\\r\\n(ii) Identify Role players involved in Root Cause Analysis (RCA)\\r\\n(iii) List steps / processes involved in RCA\\r\\n\\r\\nDetail the investigation process you would follow to find the root cause of the bearing failure.            (10)"; } }
+        string connectionString = "Data Source=TADI-C;Initial Catalog=ChietaDemo;Integrated Security=True";
+        public static List<string> Questions = new List<string>();
+        int count = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            Questions.Clear();
+            SqlConnection conn = new SqlConnection(connectionString);
+            string cmdText = $"select Question_Text from Question where Section_ID = 'C'  ";
+            SqlDataReader reader = null;
+
+
+            using (SqlCommand cmd = new SqlCommand(cmdText, conn))
+            {
+
+                conn.Open();
+                reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    Questions.Add(reader.GetString(0));
+                    count++;
+                }
+            }
+            conn.Close();
+
+            int Count = count;
+            List<Question> questions = GetQuestions(Count);
+
+            divRepeater.DataSource = questions;
+            divRepeater.DataBind();
+
         }
+
+        private static List<Question> GetQuestions(int count)
+        {
+            List<Question> questions = new List<Question>();
+
+            for (int i = 0; i < count; i++)
+            {
+                string questionNumber = $"Question {i + 1}";
+                string question = Questions[i];
+
+                Question q = new Question
+                {
+                    QuestionNumber = questionNumber,
+                    QuestionText = question
+                };
+
+                questions.Add(q);
+            }
+
+            return questions;
+        }
+
+        public class Question
+        {
+            public string QuestionNumber { get; set; }
+            public string QuestionText { get; set; }
+        }
+
     }
+
 }

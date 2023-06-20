@@ -67,6 +67,7 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  width: 100%;
 }
 
 .question-number {
@@ -93,7 +94,7 @@
         .cont{
     background-color: #F8F8F8;
     font-weight: 700;
-    width: 70%;
+    width: 100%;
     display: flex;
     padding: 20px 20px;
     border-radius: 10px;
@@ -207,7 +208,19 @@ color: #FFFFFF;
         <div class="timer" id="timer">60:00</div>
         
         <div class="cont" id="questionContainer">
-
+            <asp:Repeater ID="divRepeater" runat="server">
+        <ItemTemplate>
+            <div class="card">
+                <div class="question-number">
+                    <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>'></asp:Label>
+                </div>
+                <div class="question">
+                    <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
+                </div>
+                <asp:TextBox ID="tb_Answer" runat="server" CssClass="answer"></asp:TextBox>
+            </div>
+        </ItemTemplate>
+    </asp:Repeater>
         </div>
     </div>
              <div style="display:flex;justify-content:flex-end;padding:25px 25px;">
@@ -260,9 +273,7 @@ color: #FFFFFF;
     </script>
     <script>
         // Define the number of questions
-        const numQuestions = 10;
-
-        var myQuestion = "<%= Question %>";
+        const numQuestions = 0;
 
         // Get the cards container element
         const cardsContainer = document.getElementById('cards-container');
@@ -281,7 +292,7 @@ color: #FFFFFF;
             // Create the question element
             const question = document.createElement('div');
             question.className = 'question';
-            question.textContent = myQuestion;
+            question.textContent = `This is question ${i}.`;
 
             // Create the answer element
             const answer = document.createElement('textarea');
