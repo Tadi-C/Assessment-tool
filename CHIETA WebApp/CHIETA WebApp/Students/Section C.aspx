@@ -228,21 +228,30 @@ color: #FFFFFF;
                  </button>
              </div>
     <script>
-        // Set the target time (60 minutes from now)
-        const targetTime = new Date().getTime() + 60 * 60 * 1000;
+        // Retrieve the target time from the server-side session variable
+        const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
 
-        // Update the timer display every second
-        const timerElement = document.getElementById("timer");
+        // Calculate the initial remaining time
+        const currentTime = new Date().getTime();
+        const remainingTime = targetTime - currentTime;
+
+        // Start the timer immediately with the initial remaining time
+        updateTimer(remainingTime);
+
+        // Schedule the regular timer update every second
         const timerInterval = setInterval(updateTimer, 1000);
 
-        function updateTimer() {
-            // Get the current time
-            const currentTime = new Date().getTime();
+        function updateTimer(remainingTime = null) {
+            if (remainingTime === null) {
+                // Get the current time
+                const currentTime = new Date().getTime();
 
-            // Calculate the remaining time in milliseconds
-            const remainingTime = targetTime - currentTime;
+                // Calculate the remaining time in milliseconds
+                remainingTime = targetTime - currentTime;
+            }
 
-            // Check if the timer has reached 0
+            const timerElement = document.getElementById("timer");
+
             if (remainingTime <= 0) {
                 // Stop the timer
                 clearInterval(timerInterval);
@@ -270,6 +279,7 @@ color: #FFFFFF;
         function padZero(number) {
             return number < 10 ? "0" + number : number;
         }
+
     </script>
 <%--    <script>
         // Define the number of questions

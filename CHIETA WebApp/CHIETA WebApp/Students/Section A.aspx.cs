@@ -16,8 +16,21 @@ namespace CHIETA_WebApp.Students
         public static List<string> Questions = new List<string>();
         int count = 0;
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                if (Session["TargetTime"] == null) // Check if session variable exists
+                {
+                    // Calculate the target time (60 minutes from now)
+                    DateTime targetTime = DateTime.Now.AddMinutes(60);
+
+                    // Store the target time in a session variable
+                    Session["TargetTime"] = targetTime;
+                }
+            }
+
             Questions.Clear();
             SqlConnection conn = new SqlConnection(DBmethods.connectionString);
             string cmdText = $"select Question_Text from Question where Section_ID = 'A'  ";
