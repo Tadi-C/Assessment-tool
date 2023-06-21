@@ -62,6 +62,47 @@
 .button1:hover::before {
  width: 100%;
 }
+
+.button2 {
+ padding: 15px 25px;
+ border: unset;
+ border-radius: 15px;
+ color: #212121;
+ z-index: 1;
+ background-color:darkgoldenrod;
+ position: relative;
+ font-weight: 1000;
+ font-size: 17px;
+ -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ transition: all 250ms;
+ overflow: hidden;
+}
+
+.button2::before {
+ content: "";
+ position: absolute;
+ top: 0;
+ right: 0;
+ height: 100%;
+ width: 0;
+ border-radius: 15px;
+ background-color: #412151;
+ z-index: -1;
+ -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+ transition: all 250ms
+}
+
+.button2:hover {
+ color: #e8e8e8;
+}
+
+.button2:hover::before {
+ width: 100%;
+}
+
+
         .card {
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -223,9 +264,12 @@ color: #FFFFFF;
     </asp:Repeater>
         </div>
     </div>
-             <div style="display:flex;justify-content:flex-end;padding:25px 25px;">
-                 <button class="button1"> Next!
-                 </button>
+             <div style="display:flex;justify-content:space-between;padding:25px 25px;">
+                 
+                 <a class="button2" href="Section B.aspx" > Back!
+                 </a>
+                 <a class="button1" href="" > Submit!
+                 </a>
              </div>
     <script>
         // Retrieve the target time from the server-side session variable

@@ -224,7 +224,11 @@ color: #FFFFFF;
              <div style="display:flex;justify-content:flex-end;padding:25px 25px;">
                  <a class="button1" href="Section B.aspx"> Next!
                  </a>
+
              </div>
+              
+
+
     <script>
         // Retrieve the target time from the server-side session variable
         const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
