@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Section C.aspx.cs" Inherits="CHIETA_WebApp.Students.Section_C" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Section D.aspx.cs" Inherits="CHIETA_WebApp.Section_D" %>
 
 <!DOCTYPE html>
 <html>
@@ -165,13 +165,36 @@ color: #FFFFFF;
 
         }
 
+ table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Style to place tables underneath each other */
+    hr {
+        margin-top: 30px;
+    }
+    .input{
+        background-color:transparent;
+    }
+
         
     </style>
 
 
 </head>
 <body>
-    <form runat="server">
+    <form runat="server" onsubmit="return false;">
         <div class="container-scroller">
             <!-- partial:partials/_navbar.html -->
             <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -250,133 +273,127 @@ color: #FFFFFF;
         <div class="timer" id="timer">60:00</div>
         
         <div class="cont" id="questionContainer">
-            <asp:Repeater ID="divRepeater" runat="server">
-        <ItemTemplate>
-            <div class="card">
+                        <div class="card">
                 <div class="question-number">
                     <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>'></asp:Label>
                 </div>
                 <div class="question">
                     <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
                 </div>
-                <asp:TextBox ID="tb_Answer" runat="server" TextMode="MultiLine" Rows="5" Columns="50" CssClass="answer"></asp:TextBox>
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
+<asp:Repeater ID="tableRepeater" runat="server">
+    <ItemTemplate>
+        <div class="question-container">
+            <label class="question-label"></label>
+            <table>
+                <%# GenerateTable((Container.ItemIndex + 1), Convert.ToInt32(Eval("Rows")), Convert.ToInt32(Eval("Columns"))) %>
+            </table>
+            <hr />
         </div>
+    </ItemTemplate>
+</asp:Repeater>
 
-
+        </div>
+      </div>
     </div>
              <div style="display:flex;justify-content:space-between;padding:25px 25px;">
                  
-                 <a class="button2" href="Section B.aspx" > Back!
+                 <a class="button2" href="Section C.aspx" > Back!
                  </a>
-                 <a class="button1" href="Section D.aspx" > Next!
+                 <a class="button1" href="" > Submit!
                  </a>
              </div>
-    <script>
-        // Retrieve the target time from the server-side session variable
-        const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
-
-        // Calculate the initial remaining time
-        const currentTime = new Date().getTime();
-        const remainingTime = targetTime - currentTime;
-
-        // Start the timer immediately with the initial remaining time
-        updateTimer(remainingTime);
-
-        // Schedule the regular timer update every second
-        const timerInterval = setInterval(updateTimer, 1000);
-
-        function updateTimer(remainingTime = null) {
-            if (remainingTime === null) {
-                // Get the current time
-                const currentTime = new Date().getTime();
-
-                // Calculate the remaining time in milliseconds
-                remainingTime = targetTime - currentTime;
-            }
-
-            const timerElement = document.getElementById("timer");
-
-            if (remainingTime <= 0) {
-                // Stop the timer
-                clearInterval(timerInterval);
-
-                // Update the timer display to show 00:00
-                timerElement.textContent = "00:00";
-
-                // Perform any desired actions when the timer ends
-                // (e.g., display a message, play a sound, etc.)
-                alert("Timer has ended!");
-            } else {
-                // Calculate the remaining minutes and seconds
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-
-                // Format the remaining time as MM:SS
-                const formattedTime = padZero(minutes) + ":" + padZero(seconds);
-
-                // Update the timer display
-                timerElement.textContent = formattedTime;
-            }
-        }
-
-        // Helper function to pad single digits with leading zeros
-        function padZero(number) {
-            return number < 10 ? "0" + number : number;
-        }
-
-    </script>
-
+                        </div>
 <script>
-    // Function to save the text in the text boxes
-    function saveText() {
-        var textboxes = document.getElementsByClassName('answer');
-        for (var i = 0; i < textboxes.length; i++) {
-            var textbox = textboxes[i];
-            sessionStorage.setItem('textbox_' + i, textbox.value);
-        }
-    }
+    // Retrieve the table inputs within the repeater
+    var tableInputs = document.querySelectorAll('.table-input');
 
-    // Function to load the saved text from the session storage
-    function loadText() {
-        var textboxes = document.getElementsByClassName('answer');
-        for (var i = 0; i < textboxes.length; i++) {
-            var textbox = textboxes[i];
-            var savedText = sessionStorage.getItem('textbox_' + i);
-            if (savedText) {
-                textbox.value = savedText;
+    // Attach event listener to table inputs
+    tableInputs.forEach(function (input) {
+        input.addEventListener('change', function (event) {
+            var target = event.target; // Get the input element that triggered the change event
+            var value = target.value; // Get the updated value
+
+            // Generate a unique key for the session storage
+            var key = 'table-' + target.id.split('-')[1] + '-' + target.id.split('-')[3] + '-' + target.id.split('-')[5];
+
+            // Store the value in session storage
+            sessionStorage.setItem(key, value);
+        });
+    });
+
+    // Retrieve stored values on page load
+    window.addEventListener('load', function () {
+        tableInputs.forEach(function (input) {
+            // Generate a unique key for the session storage
+            var key = 'table-' + input.id.split('-')[1] + '-' + input.id.split('-')[3] + '-' + input.id.split('-')[5];
+
+            // Get the stored value from session storage
+            var value = sessionStorage.getItem(key);
+
+            if (value !== null) {
+                // Set the stored value to the input
+                input.value = value;
             }
-        }
-    }
+            input.style.border = 'none';
+        });
+    });
+    
 
-    // Call the loadText function when the page is loaded
-    window.onload = loadText;
-
-    // Call the saveText function when the form is submitted or when the user leaves the page
-    window.onbeforeunload = saveText;
 </script>
+ <script>
+     // Retrieve the target time from the server-side session variable
+     const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
 
-  
+     // Calculate the initial remaining time
+     const currentTime = new Date().getTime();
+     const remainingTime = targetTime - currentTime;
 
-         </div>
+     // Start the timer immediately with the initial remaining time
+     updateTimer(remainingTime);
 
+     // Schedule the regular timer update every second
+     const timerInterval = setInterval(updateTimer, 1000);
 
-                        
+     function updateTimer(remainingTime = null) {
+         if (remainingTime === null) {
+             // Get the current time
+             const currentTime = new Date().getTime();
 
-                        
-                        <!-- content-wrapper ends -->
-                       
-                    </div>
-                <!-- main-panel ends -->
-            </div>
-            <!-- page-body-wrapper ends -->
-       
-        <!-- container-scroller -->
-        <!-- plugins:js -->
-        <script src="vendors/js/vendor.bundle.base.js"></script>
-        <!-- endinject -->
+             // Calculate the remaining time in milliseconds
+             remainingTime = targetTime - currentTime;
+         }
+
+         const timerElement = document.getElementById("timer");
+
+         if (remainingTime <= 0) {
+             // Stop the timer
+             clearInterval(timerInterval);
+
+             // Update the timer display to show 00:00
+             timerElement.textContent = "00:00";
+
+             // Perform any desired actions when the timer ends
+             // (e.g., display a message, play a sound, etc.)
+             alert("Timer has ended!");
+         } else {
+             // Calculate the remaining minutes and seconds
+             const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+             const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+             // Format the remaining time as MM:SS
+             const formattedTime = padZero(minutes) + ":" + padZero(seconds);
+
+             // Update the timer display
+             timerElement.textContent = formattedTime;
+         }
+     }
+
+     // Helper function to pad single digits with leading zeros
+     function padZero(number) {
+         return number < 10 ? "0" + number : number;
+     }
+
+ </script>        <!-- endinject -->
         <!-- Plugin js for this page -->
         <script src="vendors/chart.js/Chart.min.js"></script>
         <script src="vendors/datatables.net/jquery.dataTables.js"></script>
@@ -408,4 +425,5 @@ color: #FFFFFF;
 
 </body>
 </html>
+
 

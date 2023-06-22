@@ -72,6 +72,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Students\Section D.aspx" />
     <Content Include="Students\Assessments.aspx" />
     <Content Include="Students\Assets\glenn-carstens-peters-RLw-UC03Gwc-unsplash %282%29.jpg" />
     <Content Include="Students\css\Questions.css" />
@@ -324,7 +325,6 @@
     <Content Include="Students\Section A.aspx" />
     <Content Include="Students\Section B.aspx" />
     <Content Include="Students\Section C.aspx" />
-    <Content Include="Students\SectionA.aspx" />
     <Content Include="Students\Training.aspx" />
     <Content Include="Students\vendors\ace-builds\src-min\ace.js" />
     <Content Include="Students\vendors\ace-builds\src-min\ext-beautify.js" />
@@ -1520,6 +1520,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DBmethods.cs" />
+    <Compile Include="Students\Section D.aspx.cs">
+      <DependentUpon>Section D.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Students\Section D.aspx.designer.cs">
+      <DependentUpon>Section D.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Students\Assessments.aspx.cs">
       <DependentUpon>Assessments.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1590,13 +1597,6 @@
     </Compile>
     <Compile Include="Students\Section C.aspx.designer.cs">
       <DependentUpon>Section C.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Students\SectionA.aspx.cs">
-      <DependentUpon>SectionA.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Students\SectionA.aspx.designer.cs">
-      <DependentUpon>SectionA.aspx</DependentUpon>
     </Compile>
     <Compile Include="Students\Training.aspx.cs">
       <DependentUpon>Training.aspx</DependentUpon>

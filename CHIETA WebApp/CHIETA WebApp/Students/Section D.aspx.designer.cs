@@ -7,38 +7,38 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CHIETA_WebApp.Students
+namespace CHIETA_WebApp
 {
 
 
-    public partial class SectionA
+    public partial class Section_D
     {
 
         /// <summary>
-        /// lblheading control.
+        /// lbl_QuestionNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblheading;
+        protected global::System.Web.UI.WebControls.Label lbl_QuestionNumber;
 
         /// <summary>
-        /// lblsubheadding control.
+        /// lbl_Question control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblsubheadding;
+        protected global::System.Web.UI.WebControls.Label lbl_Question;
 
         /// <summary>
-        /// btnback control.
+        /// tableRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnback;
+        protected global::System.Web.UI.WebControls.Repeater tableRepeater;
     }
 }
