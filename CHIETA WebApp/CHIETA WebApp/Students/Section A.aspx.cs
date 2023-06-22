@@ -14,11 +14,17 @@ namespace CHIETA_WebApp.Students
     {
 
         public static List<string> Questions = new List<string>();
+        public static List<string> Questions_IDs = new List<string>();
+        public static List<string> Option1 = new List<string>();
+        public static List<string> Option2 = new List<string>();
+        public static List<string> Option3 = new List<string>();
+        public static List<string> Option4 = new List<string>();
         int count = 0;
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
             if (!IsPostBack)
             {
                 if (Session["TargetTime"] == null) // Check if session variable exists
@@ -32,8 +38,13 @@ namespace CHIETA_WebApp.Students
             }
 
             Questions.Clear();
+            Questions_IDs.Clear();
+            Option1.Clear();
+            Option2.Clear();
+            Option3.Clear();
+            Option4.Clear();
             SqlConnection conn = new SqlConnection(DBmethods.connectionString);
-            string cmdText = $"select Question_Text from Question where Section_ID = 'A'  ";
+            string cmdText = $"select Question_ID, Question_Text, Question_Option1, Question_Option2, Question_Option3, Question_Option4 from Question where Section_ID = 'A'  ";
 
             SqlDataReader reader = null;
 
@@ -45,7 +56,12 @@ namespace CHIETA_WebApp.Students
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
                 {
-                    Questions.Add(reader.GetString(0));
+                    Questions_IDs.Add(reader.GetString(0));
+                    Questions.Add(reader.GetString(1));
+                    Option1.Add(reader.GetString(2));
+                    Option2.Add(reader.GetString(3));
+                    Option3.Add(reader.GetString(4));
+                    Option4.Add(reader.GetString(5));
                     count++;
                 }
             }
@@ -66,14 +82,23 @@ namespace CHIETA_WebApp.Students
             {
                 string questionNumber = $"Question {i + 1}";
                 string question = Questions[i];
+                string option1 = Option1[i];
+                string option2 = Option2[i];
+                string option3 = Option3[i];
+                string option4 = Option4[i];
 
                 Question q = new Question
                 {
                     QuestionNumber = questionNumber,
-                    QuestionText = question
+                    QuestionText = question,
+                    Option1 = option1,
+                    Option2 = option2,
+                    Option3 = option3,
+                    Option4 = option4
                 };
 
                 questions.Add(q);
+                
             }
 
             return questions;
@@ -83,7 +108,11 @@ namespace CHIETA_WebApp.Students
         {
             public string QuestionNumber { get; set; }
             public string QuestionText { get; set; }
-            public List<string>  Options { get; set; }
-    }
+            public string Option1 { get; set; }
+            public string Option2 { get; set; }
+            public string Option3 { get; set; }
+            public string Option4 { get; set; }
+
+        }
     }
 }

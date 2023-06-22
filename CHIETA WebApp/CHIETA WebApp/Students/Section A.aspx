@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Section A.aspx.cs" Inherits="CHIETA_WebApp.Students.Section_A" %>
+﻿
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Section A.aspx.cs" Inherits="CHIETA_WebApp.Students.Section_A" %>
 
 <!DOCTYPE html>
 <html>
@@ -63,7 +64,9 @@
  width: 100%;
 }
         .card {
-                width: 357px;
+            display: flex;
+        flex-direction: column;
+                width: 500px;
     height: fit-content;
     border: 1px solid black;
     margin: 10px;
@@ -76,10 +79,19 @@
         .question {
             font-size: 14px;
             margin-top: 10px;
+            margin-bottom: 10px;
+            
         }
         .option {
             display: block;
         }
+
+        .radio-button-group label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom :10px;
+    }
         .ques_cont{
             display: flex;
     justify-content: center;
@@ -196,31 +208,31 @@ color: #FFFFFF;
              
              
     <div class="ques_cont">
-        <div class="timer" id="timer">60:00</div>
-        
-        <div class="cont" id="questionContainer">
-            <asp:Repeater ID="divRepeater" runat="server">
-        <ItemTemplate>
-            <div class="card">
-                <div class="question-number">
-                    <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>'></asp:Label>
+    <div class="timer" id="timer">60:00</div>
+    <div class="cont" id="questionContainer">
+        <asp:Repeater ID="divRepeater" runat="server">
+            <ItemTemplate>
+                <div class="card">
+                    <div class="question-number">
+                        <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>'></asp:Label>
+                    </div>
+                    <div class="question">
+                        <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
+                    </div>
+                    <div class="radio-button-group">
+                        <div>
+                          <asp:RadioButton ID="RadioButton1" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option1") %>' runat="server" />
+                        </div>
+                    <asp:RadioButton ID="RadioButton2" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option2") %>' runat="server" />
+                    <asp:RadioButton ID="RadioButton3" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option3") %>' runat="server" />
+                    <asp:RadioButton ID="RadioButton4" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option4") %>' runat="server" />
                 </div>
-                <div class="question">
-                    <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
-                </div>
-
-                    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
-                        <asp:ListItem Text="Option 1" Value="1"></asp:ListItem>
-                        <asp:ListItem Text="Option 2" Value="2"></asp:ListItem>
-                        <asp:ListItem Text="Option 3" Value="3"></asp:ListItem>
-                        <asp:ListItem Text="Option 4" Value="4"></asp:ListItem>
-                    </asp:RadioButtonList>            
-
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
-        </div>
+                    </div>
+            </ItemTemplate>
+        </asp:Repeater>
     </div>
+</div>
+
              <div style="display:flex;justify-content:flex-end;padding:25px 25px;">
                  <a class="button1" href="Section B.aspx"> Next!
                  </a>
@@ -283,6 +295,15 @@ color: #FFFFFF;
         }
 
     </script>
+                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[type="radio"]').click(function () {
+            var radioGroup = $(this).attr('name');
+            $('input[name="' + radioGroup + '"]').not(this).prop('checked', false);
+        });
+    });
+</script>
 
 <%--    <script>
         var myQuestion = "<%= Question %>";
