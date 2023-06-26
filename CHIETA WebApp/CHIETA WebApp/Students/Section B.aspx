@@ -168,6 +168,7 @@ color: #FFFFFF;
         }
 
 
+
         
     </style>
 
@@ -243,7 +244,7 @@ color: #FFFFFF;
                  
                  
              </div>
-             
+                     
              
     <div class="ques_cont">
         <div class="timer" id="timer">60:00</div>

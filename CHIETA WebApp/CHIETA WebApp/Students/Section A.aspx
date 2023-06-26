@@ -88,9 +88,10 @@
 
         .radio-button-group label {
         display: flex;
-        flex-direction: column;
+        margin-left:1rem;
         align-items: center;
-        margin-bottom :10px;
+        margin-top:0.5rem;
+
     }
         .ques_cont{
             display: flex;
@@ -129,6 +130,38 @@ text-align:center;
 color: #FFFFFF;
 
         }
+    .loading-bar {
+    margin-top:20px;
+  width: 60%;
+  height: 20px;
+  border: 1px solid #ccc;
+  position: relative;
+  border-radius:20px 20px;
+  border-color:white;
+  background-color:#c2c2c2
+
+
+}
+
+.progress {
+  width: 1%;
+  height: 100%;
+  background-color: #411f51;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+
+  background: repeating-linear-gradient(-45deg, #411f51 0 30px,#0000 0 40px) left/200% 100%;
+  animation: i3 10s infinite linear;
+  border-radius: 10px;
+  border: 1px solid #766DF4;
+}
+
+@keyframes i3 {
+  100% {
+    background-position: right
+  }
 
         
     </style>
@@ -205,7 +238,11 @@ color: #FFFFFF;
                  
                  
              </div>
-             
+                                                  <div style="display:flex;justify-content:center;">
+                   <div class="loading-bar">
+                       <div class="progress"></div>
+                   </div>
+             </div>
              
     <div class="ques_cont">
     <div class="timer" id="timer">60:00</div>
@@ -220,12 +257,19 @@ color: #FFFFFF;
                         <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
                     </div>
                     <div class="radio-button-group">
-                        <div>
-                          <asp:RadioButton ID="RadioButton1" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option1") %>' runat="server" />
+                        <div style="display:flex">
+
+                            <asp:RadioButton ID="RadioButton1" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option1") %>' runat="server" />
                         </div>
-                    <asp:RadioButton ID="RadioButton2" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option2") %>' runat="server" />
-                    <asp:RadioButton ID="RadioButton3" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option3") %>' runat="server" />
-                    <asp:RadioButton ID="RadioButton4" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option4") %>' runat="server" />
+                        <div style="display:flex">
+                          <asp:RadioButton ID="RadioButton2" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option2") %>' runat="server" />
+                        </div>
+                        <div style="display:flex">
+                         <asp:RadioButton ID="RadioButton3" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option3") %>' runat="server" />
+                        </div>
+                        <div style="display:flex">
+                         <asp:RadioButton ID="RadioButton4" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option4") %>' runat="server" />
+                        </div>
                 </div>
                     </div>
             </ItemTemplate>
@@ -238,7 +282,27 @@ color: #FFFFFF;
                  </a>
 
              </div>
-              
+      <script>
+          // Attach event listeners to radio buttons
+          var radioButtons = document.querySelectorAll('input[type="radio"]');
+          radioButtons.forEach(function (radioButton) {
+              radioButton.addEventListener('click', function () {
+                  var selectedValue = this.value;
+                  sessionStorage.setItem(this.getAttribute('data-group'), selectedValue);
+              });
+          });
+
+          // On page load, retrieve and set the previously selected values
+          function SetRadioButtonsFromSession() {
+              radioButtons.forEach(function (radioButton) {
+                  var storedValue = sessionStorage.getItem(radioButton.getAttribute('data-group'));
+                  if (storedValue && storedValue === radioButton.value) {
+                      radioButton.checked = true;
+                  }
+              });
+          }
+      </script>
+        
 
 
     <script>
@@ -305,110 +369,8 @@ color: #FFFFFF;
     });
 </script>
 
-<%--    <script>
-        var myQuestion = "<%= Question %>";
-        var myOption = JSON.parse('<%= OptionJson %>');
-        // Array of questions with their respective options
-        const questions = [
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-
-            // Add more questions here
-        ];
-
-        // Generate the HTML for the questions
-        function generateQuestions() {
-            const container = document.getElementById("questionContainer");
-
-            // Loop through the questions array
-            for (let i = 0; i < questions.length; i++) {
-                const question = questions[i];
-
-                // Create a card element
-                const card = document.createElement("div");
-                card.className = "card";
-
-                // Create a question header element
-                const questionHeader = document.createElement("div");
-                questionHeader.className = "question-header";
-                questionHeader.textContent = "Question " + (i + 1);
-
-                // Create a question element
-                const questionElement = document.createElement("div");
-                questionElement.className = "question";
-                questionElement.textContent = question.question;
-
-                // Append the question header and question element to the card
-                card.appendChild(questionHeader);
-                card.appendChild(questionElement);
 
 
-
-                // Loop through the options and create radio buttons
-                for (let j = 0; j < question.options.length; j++) {
-                    const option = question.options[j];
-
-                    // Create a label element
-                    const label = document.createElement("label");
-
-                    // Create a radio button element
-                    const radio = document.createElement("input");
-                    radio.type = "radio";
-                    radio.name = "question" + i;
-                    radio.value = option;
-
-                    // Create a text node for the option
-                    const optionText = document.createTextNode(option);
-
-                    // Create a div for each option
-                    const optionDiv = document.createElement("div");
-                    optionDiv.className = "option";
-
-                    // Append the radio button and option text to the div
-                    optionDiv.appendChild(radio);
-                    optionDiv.appendChild(optionText);
-
-                    // Append the div to the card
-                    card.appendChild(optionDiv);
-                }
-
-                // Append the card to the container
-                container.appendChild(card);
-
-                // Check if the current card is the second card in the row
-                if ((i + 1) % 2 === 0) {
-                    // Create a new line break after every second card
-                    const lineBreak = document.createElement("br");
-                    container.appendChild(lineBreak);
-                }
-            }
-        }
-
-        // Call the function to generate the questions
-        generateQuestions();
-    </script>--%>
          </div>
 
 

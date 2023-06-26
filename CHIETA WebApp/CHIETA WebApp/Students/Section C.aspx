@@ -164,7 +164,34 @@ text-align:center;
 color: #FFFFFF;
 
         }
+.loading-bar {
+    margin-top:20px;
+  width: 60%;
+  height: 20px;
+  border: 1px solid #ccc;
+  position: relative;
+  border-radius:20px 20px;
+  background-color:#c2c2c2
+}
 
+.progress {
+  width: 50%;
+  height: 100%;
+  background-color: #411f51;
+  position: absolute;
+  top: 0;
+  left: 0;
+ 
+  background: repeating-linear-gradient(-45deg, #411f51 0 42px,#e8e8e8 0 50px) left/200% 100%;
+  animation: i3 16s infinite linear;
+  border-radius: 10px;
+  border: 1px solid #766DF4;
+}
+
+@keyframes i3 {
+  100% {
+    background-position: right
+  }
         
     </style>
 
@@ -240,6 +267,12 @@ color: #FFFFFF;
                  
                  
              </div>
+             <div style="display:flex;justify-content:center;">
+                   <div class="loading-bar">
+                       <div class="progress"></div>
+                   </div>
+             </div>
+
                         <div class="container">
     <h3 style ="margin-top:4%">Questionnaire</h3>
     <div class="cards-container" id="cards-container"></div>

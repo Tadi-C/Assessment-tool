@@ -187,7 +187,38 @@ color: #FFFFFF;
     .input{
         background-color:transparent;
     }
+    .loading-bar {
+    margin-top:20px;
+  width: 60%;
+  height: 20px;
+  border: 1px solid #ccc;
+  position: relative;
+  border-radius:20px 20px;
+  border-color:white;
+  background-color:#c2c2c2
 
+
+}
+
+.progress {
+  width: 75%;
+  height: 100%;
+  background-color: #411f51;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+
+  background: repeating-linear-gradient(-45deg, #411f51 0 42px,#e8e8e8 0 50px) left/200% 100%;
+  animation: i3 10s infinite linear;
+  border-radius: 10px;
+  border: 1px solid #766DF4;
+}
+
+@keyframes i3 {
+  100% {
+    background-position: right
+  }
         
     </style>
 
@@ -258,10 +289,15 @@ color: #FFFFFF;
 
                         
                         <div style="padding-top: 7%;display: flex;justify-content: center; color:#412151;">
-                        <H3>Section C (State whether the following statements are True or False.)  </H3>
+                        <H3>Section D (Fill in the tables)  </H3>
                         
                  
                  
+             </div>
+                                     <div style="display:flex;justify-content:center;">
+                   <div class="loading-bar">
+                       <div class="progress"></div>
+                   </div>
              </div>
                         <div class="container">
     <h3 style ="margin-top:4%">Questionnaire</h3>

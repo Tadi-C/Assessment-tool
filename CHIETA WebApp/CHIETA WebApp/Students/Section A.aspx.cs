@@ -1,18 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 using Newtonsoft.Json;
-
 
 namespace CHIETA_WebApp.Students
 {
     public partial class Section_A : System.Web.UI.Page
     {
-
         public static List<string> Questions = new List<string>();
         public static List<string> Questions_IDs = new List<string>();
         public static List<string> Option1 = new List<string>();
@@ -21,10 +16,10 @@ namespace CHIETA_WebApp.Students
         public static List<string> Option4 = new List<string>();
         int count = 0;
 
-
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            ClientScript.RegisterStartupScript(this.GetType(), "RadioButtonScript", "SetRadioButtonsFromSession();", true);
+
             if (!IsPostBack)
             {
                 if (Session["TargetTime"] == null) // Check if session variable exists
@@ -44,14 +39,12 @@ namespace CHIETA_WebApp.Students
             Option3.Clear();
             Option4.Clear();
             SqlConnection conn = new SqlConnection(DBmethods.connectionString);
-            string cmdText = $"select Question_ID, Question_Text, Question_Option1, Question_Option2, Question_Option3, Question_Option4 from Question where Section_ID = 'A'  ";
+            string cmdText = $"select Question_ID, Question_Text, Question_Option1, Question_Option2, Question_Option3, Question_Option4 from Question where Section_ID = 'A'";
 
             SqlDataReader reader = null;
 
-
             using (SqlCommand cmd = new SqlCommand(cmdText, conn))
             {
-
                 conn.Open();
                 reader = cmd.ExecuteReader();
                 while (reader.Read())
@@ -72,6 +65,8 @@ namespace CHIETA_WebApp.Students
 
             divRepeater.DataSource = questions;
             divRepeater.DataBind();
+
+            ClientScript.RegisterStartupScript(this.GetType(), "RadioButtonScript", "SetRadioButtonsFromSession();", true);
         }
 
         private static List<Question> GetQuestions(int count)
@@ -98,11 +93,11 @@ namespace CHIETA_WebApp.Students
                 };
 
                 questions.Add(q);
-                
             }
 
             return questions;
         }
+
 
         public class Question
         {
@@ -112,7 +107,7 @@ namespace CHIETA_WebApp.Students
             public string Option2 { get; set; }
             public string Option3 { get; set; }
             public string Option4 { get; set; }
-
         }
+
     }
 }
