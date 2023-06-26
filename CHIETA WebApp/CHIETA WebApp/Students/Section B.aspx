@@ -250,6 +250,31 @@ color: #FFFFFF;
         
         <div class="cont" id="questionContainer">
 
+            <asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="ItemBound">
+                <ItemTemplate>
+                    <div class="card">
+                        <div class="question-number">
+                        <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>' CssClass="question-header"></asp:Label>
+                        </div>
+                        <div class="question" >
+                        <asp:Label ID="lbl_QuestionText" runat="server" Text='<%# Eval("QuestionText") %>' CssClass="question-header"></asp:Label>
+                        </div>
+                        <asp:Repeater ID="OptionsRepeater" runat="server">
+                            <ItemTemplate>
+                                <div class="option">
+                                   
+                                    <asp:Label ID="lblOption" runat="server" Text='<%# Container.DataItem %>' CssClass="option-text"></asp:Label>
+                                    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+                                        <asp:ListItem Text="True" Value="1"></asp:ListItem>
+                                        <asp:ListItem Text="False" Value="0"></asp:ListItem>
+                                    </asp:RadioButtonList>
+
+                                </div>
+                            </ItemTemplate>
+                        </asp:Repeater>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
         </div>
     </div>
              <div style="display:flex;justify-content:space-between;padding:25px 25px;">
@@ -318,139 +343,6 @@ color: #FFFFFF;
         margin-bottom: 8px;
     }
 </style>
-
-<script>
-    var myQuestion = "<%= QuestionB %>";
-    var myOption = JSON.parse('<%= OptionJsonB %>');
-    // Array of questions with their respective options
-    const questions = [
-        {
-            question: myQuestion,
-            options: myOption
-        },
-        {
-            question: myQuestion,
-            options: myOption
-        },
-        {
-            question: myQuestion,
-            options: myOption
-        },
-        {
-            question: myQuestion,
-            options: myOption
-        },
-        {
-            question: myQuestion,
-            options: myOption
-        },
-        {
-            question: myQuestion,
-            options: myOption
-        },
-
-        // Add more questions here
-        // Add more questions here
-    ];
-
-    // Generate the HTML for the questions
-    function generateQuestions() {
-        const container = document.getElementById("questionContainer");
-
-        // Loop through the questions array
-        for (let i = 0; i < questions.length; i++) {
-            const question = questions[i];
-
-            // Create a card element
-            const card = document.createElement("div");
-            card.className = "card";
-
-            // Create a question header element
-            const questionHeader = document.createElement("div");
-            questionHeader.className = "question-header";
-            questionHeader.textContent = "Question " + (i + 1);
-
-            // Create a question element
-            const questionElement = document.createElement("div");
-            questionElement.className = "question";
-            questionElement.textContent = question.question;
-
-            // Append the question header and question element to the card
-            card.appendChild(questionHeader);
-            card.appendChild(questionElement);
-
-            // Loop through the options and create radio buttons for true/false
-            for (let j = 0; j < question.options.length; j++) {
-                const option = question.options[j];
-
-                // Create a label element
-                const label = document.createElement("label");
-
-                // Create a span for the option numbering
-                const numberingSpan = document.createElement("span");
-                numberingSpan.textContent = (i + 1) + "." + (j + 1) + ". ";
-
-                // Create a span for the option text
-                const optionSpan = document.createElement("span");
-                optionSpan.className = "option-text";
-                optionSpan.textContent = option;
-
-                // Create the radio buttons for true/false
-                const trueRadio = document.createElement("input");
-                trueRadio.type = "radio";
-                trueRadio.name = "question" + i + "." + (j + 1);
-                trueRadio.value = "true";
-
-                const falseRadio = document.createElement("input");
-                falseRadio.type = "radio";
-                falseRadio.name = "question" + i + "." + (j + 1);
-                falseRadio.value = "false";
-
-                // Create a div for each option
-                const optionDiv = document.createElement("div");
-                optionDiv.className = "option";
-
-                // Append the option text and numbering to the div
-                optionDiv.appendChild(numberingSpan);
-                optionDiv.appendChild(optionSpan);
-                
-
-                // Create a div for true/false radio buttons and their text
-                const trueFalseDiv = document.createElement("div");
-                trueFalseDiv.className = "true-false";
-
-                // Append the true/false radio buttons and their text to the true/false div
-                trueFalseDiv.appendChild(trueRadio);
-                trueFalseDiv.appendChild(document.createTextNode("True"));
-                trueFalseDiv.appendChild(falseRadio);
-                trueFalseDiv.appendChild(document.createTextNode("False"));
-
-                // Append the true/false div to the option div
-                optionDiv.appendChild(trueFalseDiv);
-
-                // Append the option div to the card
-                card.appendChild(optionDiv);
-            }
-
-            // Append the card to the container
-            container.appendChild(card);
-
-            // Check if the current card is the second card in the row
-            if ((i + 1) % 2 === 0) {
-                // Create a new line break after every second card
-                const lineBreak = document.createElement("br");
-                container.appendChild(lineBreak);
-            }
-        }
-    }
-
-    // Call the function to generate the questions
-    generateQuestions();
-</script>
-
-
-
-
 
          </div>
 

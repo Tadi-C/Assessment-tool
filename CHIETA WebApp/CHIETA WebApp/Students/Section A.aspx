@@ -227,7 +227,7 @@ color: #FFFFFF;
                     <asp:RadioButton ID="RadioButton3" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option3") %>' runat="server" />
                     <asp:RadioButton ID="RadioButton4" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option4") %>' runat="server" />
                 </div>
-                    </div>
+</div>
             </ItemTemplate>
         </asp:Repeater>
     </div>
@@ -305,110 +305,7 @@ color: #FFFFFF;
     });
 </script>
 
-<%--    <script>
-        var myQuestion = "<%= Question %>";
-        var myOption = JSON.parse('<%= OptionJson %>');
-        // Array of questions with their respective options
-        const questions = [
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
-            {
-                question: myQuestion,
-                options: myOption
-            },
 
-            // Add more questions here
-        ];
-
-        // Generate the HTML for the questions
-        function generateQuestions() {
-            const container = document.getElementById("questionContainer");
-
-            // Loop through the questions array
-            for (let i = 0; i < questions.length; i++) {
-                const question = questions[i];
-
-                // Create a card element
-                const card = document.createElement("div");
-                card.className = "card";
-
-                // Create a question header element
-                const questionHeader = document.createElement("div");
-                questionHeader.className = "question-header";
-                questionHeader.textContent = "Question " + (i + 1);
-
-                // Create a question element
-                const questionElement = document.createElement("div");
-                questionElement.className = "question";
-                questionElement.textContent = question.question;
-
-                // Append the question header and question element to the card
-                card.appendChild(questionHeader);
-                card.appendChild(questionElement);
-
-
-
-                // Loop through the options and create radio buttons
-                for (let j = 0; j < question.options.length; j++) {
-                    const option = question.options[j];
-
-                    // Create a label element
-                    const label = document.createElement("label");
-
-                    // Create a radio button element
-                    const radio = document.createElement("input");
-                    radio.type = "radio";
-                    radio.name = "question" + i;
-                    radio.value = option;
-
-                    // Create a text node for the option
-                    const optionText = document.createTextNode(option);
-
-                    // Create a div for each option
-                    const optionDiv = document.createElement("div");
-                    optionDiv.className = "option";
-
-                    // Append the radio button and option text to the div
-                    optionDiv.appendChild(radio);
-                    optionDiv.appendChild(optionText);
-
-                    // Append the div to the card
-                    card.appendChild(optionDiv);
-                }
-
-                // Append the card to the container
-                container.appendChild(card);
-
-                // Check if the current card is the second card in the row
-                if ((i + 1) % 2 === 0) {
-                    // Create a new line break after every second card
-                    const lineBreak = document.createElement("br");
-                    container.appendChild(lineBreak);
-                }
-            }
-        }
-
-        // Call the function to generate the questions
-        generateQuestions();
-    </script>--%>
          </div>
 
 
