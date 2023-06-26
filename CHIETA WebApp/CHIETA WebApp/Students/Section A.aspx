@@ -66,7 +66,7 @@
         .card {
             display: flex;
         flex-direction: column;
-                width: 500px;
+                width: 45%;
     height: fit-content;
     border: 1px solid black;
     margin: 10px;
@@ -102,7 +102,7 @@
         .cont{
     background-color: #F8F8F8;
     font-weight: 700;
-    width: 70%;
+    width: 75%;
     display: flex;
     padding: 20px 20px;
     border-radius: 10px;
@@ -282,26 +282,31 @@ color: #FFFFFF;
                  </a>
 
              </div>
-      <script>
-          // Attach event listeners to radio buttons
-          var radioButtons = document.querySelectorAll('input[type="radio"]');
-          radioButtons.forEach(function (radioButton) {
-              radioButton.addEventListener('click', function () {
-                  var selectedValue = this.value;
-                  sessionStorage.setItem(this.getAttribute('data-group'), selectedValue);
-              });
-          });
+<script>
+    // Attach event listeners to radio buttons
+    var radioButtons = document.querySelectorAll('input[type="radio"]');
+    radioButtons.forEach(function (radioButton) {
+        radioButton.addEventListener('click', function () {
+            var selectedValue = this.value;
+            var groupName = this.getAttribute('name'); // Get the name attribute instead of data-group
+            sessionStorage.setItem(groupName, selectedValue);
+        });
+    });
 
-          // On page load, retrieve and set the previously selected values
-          function SetRadioButtonsFromSession() {
-              radioButtons.forEach(function (radioButton) {
-                  var storedValue = sessionStorage.getItem(radioButton.getAttribute('data-group'));
-                  if (storedValue && storedValue === radioButton.value) {
-                      radioButton.checked = true;
-                  }
-              });
-          }
-      </script>
+    // On page load, retrieve and set the previously selected values
+    function SetRadioButtonsFromSession() {
+        radioButtons.forEach(function (radioButton) {
+            var groupName = radioButton.getAttribute('name'); // Get the name attribute instead of data-group
+            var storedValue = sessionStorage.getItem(groupName);
+            if (storedValue && storedValue === radioButton.value) {
+                radioButton.checked = true;
+            }
+        });
+    }
+
+    SetRadioButtonsFromSession(); // Call the function to set the values on page load
+</script>
+
         
 
 
