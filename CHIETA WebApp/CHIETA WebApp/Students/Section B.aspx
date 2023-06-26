@@ -260,7 +260,7 @@ color: #FFFFFF;
                         <div class="question" >
                         <asp:Label ID="lbl_QuestionText" runat="server" Text='<%# Eval("QuestionText") %>' CssClass="question-header"></asp:Label>
                         </div>
-                        <asp:Repeater ID="OptionsRepeater" runat="server">
+                        <asp:Repeater ID="OptionsRepeater" runat="server" >
                             <ItemTemplate>
                                 <div class="option">
                                    

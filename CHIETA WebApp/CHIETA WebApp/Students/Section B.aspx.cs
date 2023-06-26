@@ -139,10 +139,11 @@ namespace CHIETA_WebApp.Students
             {
                 List<List<string>> options = new List<List<string>>();
                 Repeater childRepeater = (Repeater)args.Item.FindControl("OptionsRepeater");
+                List<string> innerList = qs[args.Item.ItemIndex].Options;
                 for (int i = 0; i < count; i++)
                 {
-                    options.Add(qs[i].Options);
-                    childRepeater.DataSource = qs[i].Options;
+                    //options.Add(qs[i].Options);
+                    childRepeater.DataSource = innerList;
                     childRepeater.DataBind();
                 }
                 
@@ -151,5 +152,7 @@ namespace CHIETA_WebApp.Students
                 
             }
         }
+
+
     }
 }
