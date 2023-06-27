@@ -12,21 +12,37 @@ namespace CHIETA_WebApp.Students
 {
     public partial class Section_B : System.Web.UI.Page
     {
+        //true and false lists
         public static List<string> Questions = new List<string>();
         public static List<string> Questions_IDs = new List<string>();
         public static List<List<string>> Options = new List<List<string>>();
-        int count = 0;
-        int optionsCount = 0;
         public List<Question> qs = new List<Question>();
-        //public List<Option> ops = new List<Option>();
+        public int count = 0;
+
+        //Select X Questions
+        int selectXcount = 0;
+        public static List<string> SelectXQuestions = new List<string>();
+        public static List<string> SelectXQuestions_IDs = new List<string>();
+        public static List<List<string>> SelectXOptions = new List<List<string>>();
+        public List<SelectXQuestion> sXqs = new List<SelectXQuestion>();
+
+        
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            //Clearing all the lists on load
             Questions.Clear();
             Questions_IDs.Clear();
             Options.Clear();
+            SelectXQuestions.Clear();
+            SelectXQuestions_IDs.Clear();
+            SelectXOptions.Clear();
+            qs.Clear();
+            sXqs.Clear();
+
             SqlConnection conn = new SqlConnection(DBmethods.connectionString);
-            string cmdText = $"select Question_ID, Question_Text from Question where Section_ID = 'B' and Question_ID not like '%.%'  ";
+            string cmdText = $"select Question_ID, Question_Text from Question where Section_ID = 'B' and Question_ID not like '%.%' and Question_ID like '{DBmethods.paperNumber}%'  ";
             SqlDataReader reader = null;
             using (SqlCommand cmd = new SqlCommand(cmdText, conn))
             {
@@ -46,7 +62,7 @@ namespace CHIETA_WebApp.Students
             foreach (string item in Questions_IDs) 
             {
                 SqlConnection connection = new SqlConnection(DBmethods.connectionString);
-                string commandText = $"select Question_ID, Question_Text from Question where Section_ID = 'B' and Question_ID like '{item}.%' ";
+                string commandText = $"select Question_ID, Question_Text from Question where Section_ID = 'B' and Question_ID like '{item}.%' and Question_ID like '{DBmethods.paperNumber}%' ";
                 SqlDataReader read = null;
                 using (SqlCommand cmd = new SqlCommand(commandText, connection))
                 {
@@ -62,28 +78,54 @@ namespace CHIETA_WebApp.Students
                 }
                 connection.Close();
             }
-            qs.Clear();
-            qs = GetQuestions(count);
-            optionsCount = count;
-            
-            //{
-            //    new Question()
-            //    {
-            //        QuestionText = "Question 1",
-            //        Options = new List<string>() { "Option 1", "Option 2", "Option 3" }
-            //    },
-            //    new Question()
-            //    {
-            //        QuestionText = "Question 2",
-            //        Options = new List<string>() { "Option A", "Option B", "Option C" }
-            //    }
-            //};
             
 
+            
+            SqlConnection connectionX = new SqlConnection(DBmethods.connectionString);
+            string commandX = $"select Question_ID, Question_Text from Question where Section_ID = 'F' and Question_ID not like '%.%' and Question_ID like '{DBmethods.paperNumber}%' ";
+            SqlDataReader readX = null;
+            using (SqlCommand sql = new SqlCommand(commandX, connectionX)) 
+            {
+                connectionX.Open();
+                readX = sql.ExecuteReader();
+                while (readX.Read())
+                {
+                    SelectXQuestions_IDs.Add(readX.GetString(0));
+                    SelectXQuestions.Add(readX.GetString(1));
+                    selectXcount++;
+                }
+            }
+            connectionX.Close();
+
+            int selectXQuestionCount = 0;
+            foreach (string x in SelectXQuestions_IDs) 
+            {
+                SqlConnection connectionXoption = new SqlConnection(DBmethods.connectionString);
+                string commandXoption = $"select Question_ID, Question_Text from Question where Section_ID = 'F' and Question_ID like '{x}.%' and Question_ID like '{DBmethods.paperNumber}%' ";
+                SqlDataReader readXoption = null;
+                using (SqlCommand sqlCommand = new SqlCommand(commandXoption, connectionXoption))
+                {
+                    connectionXoption.Open();
+                    readXoption = sqlCommand.ExecuteReader();
+                    List<string> list = new List<string>();
+                    while (readXoption.Read())
+                    {
+                        list.Add(readXoption.GetString(1));
+                        selectXQuestionCount++;
+                    }
+                    SelectXOptions.Add(list);
+                }
+                connectionXoption.Close();
+            }
+            
+            qs = GetQuestions(count);
             Repeater1.DataSource = qs;
             Repeater1.DataBind();
-
             
+            sXqs = GetSelectXQuestions(selectXcount, count);
+            Repeater2.DataSource = sXqs;
+            Repeater2.DataBind();
+
 
         }
         private static List<Question> GetQuestions(int count)
@@ -105,20 +147,29 @@ namespace CHIETA_WebApp.Students
             return questions;
         }
 
-        //private static List<Option> GetOptions(int count)
-        //{
-        //    List<Option> options = new List<Option>();
-        //    for (int i = 0; i < count; i++)
-        //    {
-        //        List<string> option = Options[i];
-        //        Option ops = new Option
-        //        {
-        //            Options = option
-        //        };
-        //        options.Add(ops);
-        //    }
-        //    return options;
-        //}
+        private static List<SelectXQuestion> GetSelectXQuestions(int xcount, int totalCount)
+        {
+            List<SelectXQuestion> selectXQuestions = new List<SelectXQuestion>();
+            for (int i = 0; i < xcount; i++)
+            {
+                string questionNumber = $"Question {i + totalCount + 1}";
+                string question = SelectXQuestions[i];
+                List<string> strings = SelectXOptions[i];
+
+                SelectXQuestion sX = new SelectXQuestion
+                {
+                    QuestionNumber = questionNumber,
+                    QuestionText = question,
+                    Options = strings
+                    
+                };
+                selectXQuestions.Add(sX);
+               
+            }
+            return selectXQuestions;
+        }
+
+
 
         public class Question
         {
@@ -128,16 +179,11 @@ namespace CHIETA_WebApp.Students
 
         }
 
-        //public class Option
-        //{
-        //    public List<string> Options { get; set; }
-        //}
-
         protected void ItemBound(object sender, RepeaterItemEventArgs args)
         {
             if (args.Item.ItemType == ListItemType.Item || args.Item.ItemType == ListItemType.AlternatingItem)
             {
-                List<List<string>> options = new List<List<string>>();
+                
                 Repeater childRepeater = (Repeater)args.Item.FindControl("OptionsRepeater");
                 List<string> innerList = qs[args.Item.ItemIndex].Options;
                 for (int i = 0; i < count; i++)
@@ -145,14 +191,32 @@ namespace CHIETA_WebApp.Students
                     //options.Add(qs[i].Options);
                     childRepeater.DataSource = innerList;
                     childRepeater.DataBind();
-                }
-                
-                
-                
-                
+                }                               
             }
         }
 
+        protected void ItenBoundX(object sender, RepeaterItemEventArgs args)
+        {
+            if (args.Item.ItemType == ListItemType.Item || args.Item.ItemType == ListItemType.AlternatingItem)
+            {
 
+                Repeater childRepeater = (Repeater)args.Item.FindControl("OptionsRepeater1");
+                List<string> inner = sXqs[args.Item.ItemIndex].Options;
+                for (int i = 0; i < selectXcount; i++)
+                {
+                    //options.Add(qs[i].Options);
+                    childRepeater.DataSource = inner;
+                    childRepeater.DataBind();
+                }
+            }
+            
+        }
+
+        public class SelectXQuestion
+        {
+            public string QuestionNumber { get; set; }
+            public string QuestionText { get; set; }
+            public List<string> Options { get; set; }
+        }
     }
 }

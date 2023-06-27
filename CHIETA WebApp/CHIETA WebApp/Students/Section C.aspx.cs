@@ -20,7 +20,7 @@ namespace CHIETA_WebApp.Students
             
             Questions.Clear();
             SqlConnection conn = new SqlConnection(DBmethods.connectionString);
-            string cmdText = $"select Question_Text from Question where Section_ID = 'C'  ";
+            string cmdText = $"select Question_Text from Question where (Section_ID = 'C' or Section_ID = 'D') and Question_ID like '{DBmethods.paperNumber}%' ";
             SqlDataReader reader = null;
 
 

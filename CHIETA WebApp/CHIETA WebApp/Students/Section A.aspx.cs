@@ -39,7 +39,7 @@ namespace CHIETA_WebApp.Students
             Option3.Clear();
             Option4.Clear();
             SqlConnection conn = new SqlConnection(DBmethods.connectionString);
-            string cmdText = $"select Question_ID, Question_Text, Question_Option1, Question_Option2, Question_Option3, Question_Option4 from Question where Section_ID = 'A'";
+            string cmdText = $"select Question_ID, Question_Text, Question_Option1, Question_Option2, Question_Option3, Question_Option4 from Question where Section_ID = 'A' and Question_ID like '{DBmethods.paperNumber}%' ";
 
             SqlDataReader reader = null;
 
@@ -61,10 +61,18 @@ namespace CHIETA_WebApp.Students
             conn.Close();
 
             int Count = count;
-            List<Question> questions = GetQuestions(Count);
+            if (count == 0)
+            {
+                Response.Redirect("Section B.aspx");
+            }
+            else
+            {
+                List<Question> questions = GetQuestions(Count);
 
-            divRepeater.DataSource = questions;
-            divRepeater.DataBind();
+                divRepeater.DataSource = questions;
+                divRepeater.DataBind();
+            }
+            
 
             ClientScript.RegisterStartupScript(this.GetType(), "RadioButtonScript", "SetRadioButtonsFromSession();", true);
         }
