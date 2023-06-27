@@ -130,6 +130,41 @@ text-align:center;
 color: #FFFFFF;
 
         }
+
+/* Hide the default radio button */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Style the custom radio button */
+input[type="radio"]:before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 1.5px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+/* Style the custom radio button when selected */
+input[type="radio"]:checked:before {
+  background-color: #411f51;
+}
+
+/* Style the custom radio button on hover */
+input[type="radio"]:hover:before {
+  background-color: #650c8f;
+}
     .loading-bar {
     margin-top:20px;
   width: 60%;
