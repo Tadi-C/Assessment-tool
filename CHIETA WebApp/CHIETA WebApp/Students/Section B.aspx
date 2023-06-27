@@ -368,6 +368,35 @@ input[type="radio"]:hover:before {
 </asp:Repeater>
 
         </div>
+
+        <div class="cont" >
+
+<asp:Repeater ID="Repeater2" runat="server" OnItemDataBound="ItenBoundX">
+    <ItemTemplate>
+        <div class="card">
+            <div class="question-number">
+                <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>' CssClass="question-header"></asp:Label>
+            </div>
+            <div class="question">
+                <asp:Label ID="lbl_QuestionText" runat="server" Text='<%# Eval("QuestionText") %>' CssClass="question-header"></asp:Label>
+            </div>
+            <asp:Repeater ID="OptionsRepeater1" runat="server">
+                <ItemTemplate>
+                    <div class="option">
+                        <div>
+                            <asp:Label ID="lblOption" runat="server" Text='<%# Container.DataItem %>' CssClass="option-text"></asp:Label>
+                        </div>
+                        <div class="radio-buttons-container">
+                            <asp:CheckBox ID="CheckBox1" runat="server" />
+                        </div>
+                    </div>
+                </ItemTemplate>
+            </asp:Repeater>
+        </div>
+    </ItemTemplate>
+</asp:Repeater>
+
+        </div>
     </div>
              <div style="display:flex;justify-content:space-between;padding:25px 25px;">
                   <a class="button2" href="Section A.aspx" > Back!
