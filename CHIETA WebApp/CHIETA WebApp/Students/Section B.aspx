@@ -105,7 +105,7 @@
                margin-bottom: 10px;
         border: 1px solid #ccc;
         padding: 10px;
-        width: 45%;
+        width: 75%;
         display: inline-block;
         vertical-align: top;
         margin-right:5%;
@@ -145,7 +145,14 @@
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
+    flex-direction:column;
         }
+
+            .option {
+        margin-bottom: 8px;
+        display:flex;
+        justify-content:space-between;
+    }
         .timer {
            position: absolute;
            border: unset;
@@ -168,7 +175,83 @@ color: #FFFFFF;
         }
 
 
+.radio-buttons-container {
+    display: flex;
+    flex-direction: row;
+}
 
+.radio-buttons-list {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 10px;
+}
+ tbody{
+     display:flex;
+ }
+
+/* Hide the default radio button */
+input[type="radio"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #ccc;
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Style the custom radio button */
+input[type="radio"]:before {
+  content: "";
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 1.5px;
+  border-radius: 50%;
+  background-color: #fff;
+}
+
+/* Style the custom radio button when selected */
+input[type="radio"]:checked:before {
+  background-color: #411f51;
+}
+
+/* Style the custom radio button on hover */
+input[type="radio"]:hover:before {
+  background-color: #650c8f;
+}
+.loading-bar {
+    margin-top:20px;
+  width: 60%;
+  height: 20px;
+  border: 1px solid #ccc;
+  position: relative;
+  border-radius:20px 20px;
+  background-color:#c2c2c2
+}
+
+.progress {
+  width: 25%;
+  height: 100%;
+  background-color: #411f51;
+  position: absolute;
+  top: 0;
+  left: 0;
+ 
+  background: repeating-linear-gradient(-45deg, #411f51 0 42px,#e8e8e8 0 50px) left/200% 100%;
+  animation: i3 16s infinite linear;
+  border-radius: 10px;
+  border: 1px solid #766DF4;
+}
+
+@keyframes i3 {
+  100% {
+    background-position: right
+  }
         
     </style>
 
@@ -244,6 +327,11 @@ color: #FFFFFF;
                  
                  
              </div>
+               <div style="display:flex;justify-content:center;">
+                   <div class="loading-bar">
+                       <div class="progress"></div>
+                   </div>
+             </div>
                      
              
     <div class="ques_cont">
@@ -251,31 +339,34 @@ color: #FFFFFF;
         
         <div class="cont" id="questionContainer">
 
-            <asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="ItemBound">
+<asp:Repeater ID="Repeater1" runat="server" OnItemDataBound="ItemBound">
+    <ItemTemplate>
+        <div class="card">
+            <div class="question-number">
+                <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>' CssClass="question-header"></asp:Label>
+            </div>
+            <div class="question">
+                <asp:Label ID="lbl_QuestionText" runat="server" Text='<%# Eval("QuestionText") %>' CssClass="question-header"></asp:Label>
+            </div>
+            <asp:Repeater ID="OptionsRepeater" runat="server">
                 <ItemTemplate>
-                    <div class="card">
-                        <div class="question-number">
-                        <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>' CssClass="question-header"></asp:Label>
+                    <div class="option">
+                        <div>
+                            <asp:Label ID="lblOption" runat="server" Text='<%# Container.DataItem %>' CssClass="option-text"></asp:Label>
                         </div>
-                        <div class="question" >
-                        <asp:Label ID="lbl_QuestionText" runat="server" Text='<%# Eval("QuestionText") %>' CssClass="question-header"></asp:Label>
+                        <div class="radio-buttons-container">
+                            <asp:RadioButtonList ID="RadioButtonList1" runat="server" CssClass="radio-buttons-list">
+                                <asp:ListItem Text="True" Value="1"></asp:ListItem>
+                                <asp:ListItem Text="False" Value="0"></asp:ListItem>
+                            </asp:RadioButtonList>
                         </div>
-                        <asp:Repeater ID="OptionsRepeater" runat="server" >
-                            <ItemTemplate>
-                                <div class="option">
-                                   
-                                    <asp:Label ID="lblOption" runat="server" Text='<%# Container.DataItem %>' CssClass="option-text"></asp:Label>
-                                    <asp:RadioButtonList ID="RadioButtonList1" runat="server">
-                                        <asp:ListItem Text="True" Value="1"></asp:ListItem>
-                                        <asp:ListItem Text="False" Value="0"></asp:ListItem>
-                                    </asp:RadioButtonList>
-
-                                </div>
-                            </ItemTemplate>
-                        </asp:Repeater>
                     </div>
                 </ItemTemplate>
             </asp:Repeater>
+        </div>
+    </ItemTemplate>
+</asp:Repeater>
+
         </div>
     </div>
              <div style="display:flex;justify-content:space-between;padding:25px 25px;">
@@ -285,6 +376,30 @@ color: #FFFFFF;
                  </a>
                 
              </div>
+ <script>
+     // Attach event listeners to radio buttons
+     var radioButtons = document.querySelectorAll('input[type="radio"]');
+     radioButtons.forEach(function (radioButton) {
+         radioButton.addEventListener('click', function () {
+             var selectedValue = this.value;
+             var groupName = this.getAttribute('name'); // Get the name attribute instead of data-group
+             sessionStorage.setItem(groupName, selectedValue);
+         });
+     });
+
+     // On page load, retrieve and set the previously selected values
+     function SetRadioButtonsFromSession() {
+         radioButtons.forEach(function (radioButton) {
+             var groupName = radioButton.getAttribute('name'); // Get the name attribute instead of data-group
+             var storedValue = sessionStorage.getItem(groupName);
+             if (storedValue && storedValue === radioButton.value) {
+                 radioButton.checked = true;
+             }
+         });
+     }
+
+     SetRadioButtonsFromSession(); // Call the function to set the values on page load
+ </script>
     <script>
         // Retrieve the target time from the server-side session variable
         const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
@@ -339,11 +454,7 @@ color: #FFFFFF;
         }
 
     </script>
-<style>
-    .option {
-        margin-bottom: 8px;
-    }
-</style>
+
 
          </div>
 
