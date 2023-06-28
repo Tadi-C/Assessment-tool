@@ -12,6 +12,7 @@ namespace CHIETA_WebApp
     {
         public static List<int> Rows = new List<int>();
         public static List<int> Columns = new List<int>();
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Rows.Clear(); Columns.Clear();
@@ -61,11 +62,18 @@ namespace CHIETA_WebApp
 
             if (!IsPostBack)
             {
-                // Define the data for tables
-                var tablesData = new[]
+                var tablesData = new List<object>();
+
+                for (int i = 0; i < 0; i++)
                 {
-                    new { Rows = Rows[0], Columns = Columns[0] },                    
-                };
+                    tablesData.Add(new { Rows = Rows[i], Columns = Columns[i] });
+                }
+                
+                // Define the data for tables
+                //var tablesData = new[]
+                //{
+                //    new { Rows = Rows[0], Columns = Columns[0] },                    
+                //};
 
                 tableRepeater.DataSource = tablesData;
                 tableRepeater.DataBind();
