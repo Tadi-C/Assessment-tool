@@ -109,6 +109,7 @@
     justify-content: center;
     align-content: center;
     flex-wrap: wrap;
+    flex-direction: column;
         }
         .timer {
            position: absolute;
@@ -292,17 +293,17 @@ input[type="radio"]:hover:before {
                         <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
                     </div>
                     <div class="radio-button-group">
-                        <div style="display:flex">
+                        <div style="display:flex;align-items: center;">
 
                             <asp:RadioButton ID="RadioButton1" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option1") %>' runat="server" />
                         </div>
-                        <div style="display:flex">
+                        <div style="display:flex;align-items: center;">
                           <asp:RadioButton ID="RadioButton2" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option2") %>' runat="server" />
                         </div>
-                        <div style="display:flex">
+                        <div style="display:flex;align-items: center;">
                          <asp:RadioButton ID="RadioButton3" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option3") %>' runat="server" />
                         </div>
-                        <div style="display:flex">
+                        <div style="display:flex;align-items: center;">
                          <asp:RadioButton ID="RadioButton4" GroupName='<%# "RadioGroup_" + Eval("QuestionNumber") %>' Text='<%# Eval("Option4") %>' runat="server" />
                         </div>
                 </div>
