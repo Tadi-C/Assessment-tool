@@ -310,18 +310,14 @@ color: #FFFFFF;
         
         <div class="cont" id="questionContainer">
                         <div class="card">
-                <div class="question-number">
-                    <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>'></asp:Label>
-                </div>
-                <div class="question">
-                    <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
-                </div>
+               
 <asp:Repeater ID="tableRepeater" runat="server">
     <ItemTemplate>
         <div class="question-container">
-            <label class="question-label"></label>
+            
+             
             <table>
-                <%# GenerateTable((Container.ItemIndex + 1), Convert.ToInt32(Eval("Rows")), Convert.ToInt32(Eval("Columns"))) %>
+                <%# GenerateTable((Container.ItemIndex),Eval("questionText").ToString(), Convert.ToInt32(Eval("Rows")), Convert.ToInt32(Eval("Columns")), Eval("RowNames"), Eval("ColNames")) %>
             </table>
             <hr />
         </div>
@@ -373,7 +369,7 @@ color: #FFFFFF;
             input.style.border = 'none';
         });
     });
-    
+
 
 </script>
  <script>
