@@ -215,10 +215,12 @@ color: #FFFFFF;
   border: 1px solid #766DF4;
 }
 
-@keyframes i3 {
-  100% {
-    background-position: right
-  }
+            @keyframes i3 {
+                100% {
+                    background-position: right
+                }
+            }
+
         
     </style>
 

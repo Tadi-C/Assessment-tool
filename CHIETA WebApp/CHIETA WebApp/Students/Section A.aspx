@@ -25,81 +25,84 @@
     <!-- endinject -->
     <link rel="shortcut icon" href="images/favicon.png"/>
         <style>
-        .button1 {
- padding: 15px 25px;
- border: unset;
- border-radius: 15px;
- color: #212121;
- z-index: 1;
- background-color:darkgoldenrod;
- position: relative;
- font-weight: 1000;
- font-size: 17px;
- -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- transition: all 250ms;
- overflow: hidden;
+.button1 {
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1;
+    background-color: darkgoldenrod;
+    position: relative;
+    font-weight: 1000;
+    font-size: 17px;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    transition: all 250ms;
+    overflow: hidden;
 }
 
 .button1::before {
- content: "";
- position: absolute;
- top: 0;
- left: 0;
- height: 100%;
- width: 0;
- border-radius: 15px;
- background-color: #412151;
- z-index: -1;
- -webkit-box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
- transition: all 250ms
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    border-radius: 15px;
+    background-color: #412151;
+    z-index: -1;
+    -webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+    transition: all 250ms;
 }
 
 .button1:hover {
- color: #e8e8e8;
+    color: #e8e8e8;
 }
 
 .button1:hover::before {
- width: 100%;
+    width: 100%;
 }
-        .card {
-            display: flex;
-        flex-direction: column;
-                width: 45%;
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
     height: fit-content;
     border: 1px solid black;
     margin: 10px;
     padding: 10px;
     display: inline-block;
-        }
-        .question-header {
-            font-weight: bold;
-        }
-        .question {
-            font-size: 14px;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            
-        }
-        .option {
-            display: block;
-        }
+}
 
-        .radio-button-group label {
-        display: flex;
-        margin-left:1rem;
-        align-items: center;
-        margin-top:0.5rem;
+.question-header {
+    font-weight: bold;
+}
 
-    }
-        .ques_cont{
-            display: flex;
+.question {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.option {
+    display: block;
+}
+
+.radio-button-group label {
+    display: flex;
+    margin-left: 1rem;
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+.ques_cont {
+    display: flex;
     justify-content: center;
     padding-top: 35px;
-    
-        }
-        .cont{
+}
+
+.cont {
     background-color: #F8F8F8;
     font-weight: 700;
     width: 75%;
@@ -110,97 +113,119 @@
     align-content: center;
     flex-wrap: wrap;
     flex-direction: column;
-        }
-        .timer {
-           position: absolute;
-           border: unset;
- border-radius: 15px;
-  font-weight: 1000;
- font-size: 17px;
-width: 95px;
-height: 32px;
-left: 90%;
-top: 10%;
+}
 
-background: #412151;
-
-text-align:center;
-/* identical to box height */
-
-
-color: #FFFFFF;
-
-        }
+.timer {
+    position: absolute;
+    border: unset;
+    border-radius: 15px;
+    font-weight: 1000;
+    font-size: 17px;
+    width: 95px;
+    height: 32px;
+    left: 90%;
+    top: 10%;
+    background: #412151;
+    text-align: center;
+    color: #FFFFFF;
+}
 
 /* Hide the default radio button */
 input[type="radio"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  border: 2px solid #ccc;
-  border-radius: 50%;
-  outline: none;
-  cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
 }
 
 /* Style the custom radio button */
 input[type="radio"]:before {
-  content: "";
-  display: block;
-  width: 10px;
-  height: 10px;
-  margin: 1.5px;
-  border-radius: 50%;
-  background-color: #fff;
+    content: "";
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 1.5px;
+    border-radius: 50%;
+    background-color: #fff;
 }
 
 /* Style the custom radio button when selected */
 input[type="radio"]:checked:before {
-  background-color: #411f51;
+    background-color: #411f51;
 }
 
 /* Style the custom radio button on hover */
 input[type="radio"]:hover:before {
-  background-color: #650c8f;
+    background-color: #650c8f;
 }
-    .loading-bar {
-    margin-top:20px;
-  width: 60%;
-  height: 20px;
-  border: 1px solid #ccc;
-  position: relative;
-  border-radius:20px 20px;
-  border-color:white;
-  background-color:#c2c2c2
 
-
+.loading-bar {
+    margin-top: 20px;
+    width: 60%;
+    height: 20px;
+    border: 1px solid #ccc;
+    position: relative;
+    border-radius: 20px 20px;
+    border-color: white;
+    background-color: #c2c2c2;
 }
 
 .progress {
-  width: 1%;
-  height: 100%;
-  background-color: #411f51;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-
-  background: repeating-linear-gradient(-45deg, #411f51 0 30px,#0000 0 40px) left/200% 100%;
-  animation: i3 10s infinite linear;
-  border-radius: 10px;
-  border: 1px solid #766DF4;
+    width: 1%;
+    height: 100%;
+    background-color: #411f51;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: repeating-linear-gradient(-45deg, #411f51 0 30px, #0000 0 40px) left/200% 100%;
+    animation: i3 10s infinite linear;
+    border-radius: 10px;
+    border: 1px solid #766DF4;
 }
 
 @keyframes i3 {
-  100% {
-    background-position: right
-  }
+    100% {
+        background-position: right;
+    }
+}
 
-        
-    </style>
+/* Media Queries */
+
+/* Adjust styles for screens smaller than 768px */
+@media (max-width: 768px) {
+    .card {
+        width: 100%;
+    }
+
+    .cont {
+        width: 100%;
+    }
+}
+
+/* Adjust styles for screens smaller than 576px */
+@media (max-width: 576px) {
+    .button1 {
+        font-size: 14px;
+    }
+
+    .timer {
+        font-size: 14px;
+        width: 80px;
+        height: 28px;
+    }
+
+    .loading-bar {
+        width: 80%;
+    }
+}
+</style>
+
 
 
 </head>

@@ -15,23 +15,28 @@ namespace CHIETA_WebApp.Students
 
         }
 
-        protected void btn_Assessment1_Click(object sender, EventArgs e)
+        protected void btnAssess_Click(object sender, EventArgs e)
         {
             DBmethods.paperNumber = "1A";
             Response.Redirect("Section A.aspx");
 
         }
 
-        protected void btn_Assessment2_Click(object sender, EventArgs e)
+        protected void btnAssess2_Click(object sender, EventArgs e)
         {
             DBmethods.paperNumber = "2A";
             Response.Redirect("Section A.aspx");
         }
 
-        protected void btn_Assessment3_Click(object sender, EventArgs e)
+        protected void btnAssess3_Click(object sender, EventArgs e)
         {
             DBmethods.paperNumber = "3A";
             Response.Redirect("Section A.aspx");
+        }
+
+        protected void btnBack_ServerClick(object sender, EventArgs e)
+        {
+
         }
     }
 }
