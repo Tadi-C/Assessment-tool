@@ -508,6 +508,45 @@ input[type="radio"]:hover:before {
                  </a>
                 
              </div>
+<script>
+    // Attach event listeners to checkboxes
+    var cards = document.querySelectorAll('.card');
+    cards.forEach(function (card) {
+        var checkboxes = card.querySelectorAll('.ui-checkbox');
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                var selectedValues = [];
+                checkboxes.forEach(function (cb) {
+                    if (cb.checked) {
+                        selectedValues.push(cb.parentElement.querySelector('.option-text').innerText);
+                    }
+                });
+                var cardId = card.querySelector('.question-number').innerText;
+                var groupName = 'checkboxes-' + cardId;
+                sessionStorage.setItem(groupName, JSON.stringify(selectedValues));
+            });
+        });
+    });
+
+    // On page load, retrieve and set the previously selected values
+    function setCheckboxesFromSession() {
+        cards.forEach(function (card) {
+            var checkboxes = card.querySelectorAll('.ui-checkbox');
+            var cardId = card.querySelector('.question-number').innerText;
+            var groupName = 'checkboxes-' + cardId;
+            var storedValues = sessionStorage.getItem(groupName);
+            if (storedValues) {
+                var selectedValues = JSON.parse(storedValues);
+                checkboxes.forEach(function (checkbox) {
+                    var optionText = checkbox.parentElement.querySelector('.option-text').innerText;
+                    checkbox.checked = selectedValues.includes(optionText);
+                });
+            }
+        });
+    }
+
+    setCheckboxesFromSession(); // Call the function to set the values on page load
+</script>
  <script>
      // Attach event listeners to radio buttons
      var radioButtons = document.querySelectorAll('input[type="radio"]');

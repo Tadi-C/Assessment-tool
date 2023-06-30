@@ -14,8 +14,8 @@
     <asp:Label ID="Lblass1" runat="server" Text="Assessment 1" CssClass="Asslbl1"></asp:Label>
     <asp:Button ID="Btnass2" runat="server" class="Assbtn2" OnClick="btn_Assessment2_Click"  />
     <asp:Label ID="Lblass2" runat="server" Text="Assessment 2" CssClass="Asslbl2" ></asp:Label>
-     <asp:Button ID="Btnass3" runat="server" CssClass="btn3" Text="Assessment 3" OnClick="btn_Assessment3_Click"/>
+    
    
-    <asp:Button ID="btnback" runat="server" Text="Back" CssClass="btnback" />
+   
     
 </asp:Content>
