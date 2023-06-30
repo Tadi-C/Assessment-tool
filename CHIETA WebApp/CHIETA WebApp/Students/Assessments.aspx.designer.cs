@@ -15,48 +15,48 @@ namespace CHIETA_WebApp.Students
     {
 
         /// <summary>
-        /// Heading control.
+        /// lblMock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Heading;
+        protected global::System.Web.UI.WebControls.Label lblMock;
 
         /// <summary>
-        /// Btnass1 control.
+        /// btn3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btnass1;
+        protected global::System.Web.UI.WebControls.Button btn3;
 
         /// <summary>
-        /// Lblass1 control.
+        /// btn4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lblass1;
+        protected global::System.Web.UI.WebControls.Button btn4;
 
         /// <summary>
-        /// Btnass2 control.
+        /// Button1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Btnass2;
+        protected global::System.Web.UI.WebControls.Button Button1;
 
         /// <summary>
-        /// Lblass2 control.
+        /// btnBack control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Lblass2;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnBack;
     }
 }
