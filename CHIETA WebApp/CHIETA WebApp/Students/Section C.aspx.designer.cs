@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CHIETA_WebApp.Students
+namespace CHIETA_WebApp
 {
 
 
-    public partial class Section_C
+    public partial class Section_D
     {
 
         /// <summary>
-        /// divRepeater control.
+        /// tableRepeater control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater divRepeater;
+        protected global::System.Web.UI.WebControls.Repeater tableRepeater;
     }
 }

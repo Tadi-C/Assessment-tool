@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Section C.aspx.cs" Inherits="CHIETA_WebApp.Students.Section_C" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Section C.aspx.cs" Inherits="CHIETA_WebApp.Section_D" %>
 
 <!DOCTYPE html>
 <html>
@@ -164,14 +164,40 @@ text-align:center;
 color: #FFFFFF;
 
         }
-.loading-bar {
+
+ table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    th, td {
+        padding: 8px;
+        border: 1px solid black;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    /* Style to place tables underneath each other */
+    hr {
+        margin-top: 30px;
+    }
+    .input{
+        background-color:transparent;
+    }
+    .loading-bar {
     margin-top:20px;
   width: 60%;
   height: 20px;
   border: 1px solid #ccc;
   position: relative;
   border-radius:20px 20px;
+  border-color:white;
   background-color:#c2c2c2
+
+
 }
 
 .progress {
@@ -181,9 +207,10 @@ color: #FFFFFF;
   position: absolute;
   top: 0;
   left: 0;
- 
+
+
   background: repeating-linear-gradient(-45deg, #411f51 0 42px,#e8e8e8 0 50px) left/200% 100%;
-  animation: i3 16s infinite linear;
+  animation: i3 10s infinite linear;
   border-radius: 10px;
   border: 1px solid #766DF4;
 }
@@ -198,7 +225,7 @@ color: #FFFFFF;
 
 </head>
 <body>
-    <form runat="server">
+    <form runat="server" onsubmit="return false;">
         <div class="container-scroller">
             <!-- partial:partials/_navbar.html -->
             <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -262,17 +289,16 @@ color: #FFFFFF;
 
                         
                         <div style="padding-top: 7%;display: flex;justify-content: center; color:#412151;">
-                        <H3>Section C (State whether the following statements are True or False.)  </H3>
+                        <H3>Section C (Fill in the Table)  </H3>
                         
                  
                  
              </div>
-             <div style="display:flex;justify-content:center;">
+                                     <div style="display:flex;justify-content:center;">
                    <div class="loading-bar">
                        <div class="progress"></div>
                    </div>
              </div>
-
                         <div class="container">
     <h3 style ="margin-top:4%">Questionnaire</h3>
     <div class="cards-container" id="cards-container"></div>
@@ -283,22 +309,23 @@ color: #FFFFFF;
         <div class="timer" id="timer">60:00</div>
         
         <div class="cont" id="questionContainer">
-            <asp:Repeater ID="divRepeater" runat="server">
-        <ItemTemplate>
-            <div class="card">
-                <div class="question-number">
-                    <asp:Label ID="lbl_QuestionNumber" runat="server" Text='<%# Eval("QuestionNumber") %>'></asp:Label>
-                </div>
-                <div class="question">
-                    <asp:Label ID="lbl_Question" runat="server" Text='<%# Eval("QuestionText") %>'></asp:Label>
-                </div>
-                <asp:TextBox ID="tb_Answer" runat="server" TextMode="MultiLine" Rows="5" Columns="50" CssClass="answer"></asp:TextBox>
-            </div>
-        </ItemTemplate>
-    </asp:Repeater>
+                        <div class="card">
+               
+<asp:Repeater ID="tableRepeater" runat="server">
+    <ItemTemplate>
+        <div class="question-container">
+            
+             
+            <table>
+                <%# GenerateTable((Container.ItemIndex),Eval("questionText").ToString(), Convert.ToInt32(Eval("Rows")), Convert.ToInt32(Eval("Columns")), Eval("RowNames"), Eval("ColNames")) %>
+            </table>
+            <hr />
         </div>
+    </ItemTemplate>
+</asp:Repeater>
 
-
+        </div>
+      </div>
     </div>
              <div style="display:flex;justify-content:space-between;padding:25px 25px;">
                  
@@ -307,61 +334,98 @@ color: #FFFFFF;
                  <a class="button1" href="Section D.aspx" > Next!
                  </a>
              </div>
-    <script>
-        // Retrieve the target time from the server-side session variable
-        const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
+                        </div>
+<script>
+    // Retrieve the table inputs within the repeater
+    var tableInputs = document.querySelectorAll('.table-input');
 
-        // Calculate the initial remaining time
-        const currentTime = new Date().getTime();
-        const remainingTime = targetTime - currentTime;
+    // Attach event listener to table inputs
+    tableInputs.forEach(function (input) {
+        input.addEventListener('change', function (event) {
+            var target = event.target; // Get the input element that triggered the change event
+            var value = target.value; // Get the updated value
 
-        // Start the timer immediately with the initial remaining time
-        updateTimer(remainingTime);
+            // Generate a unique key for the session storage
+            var key = 'table-' + target.id.split('-')[1] + '-' + target.id.split('-')[3] + '-' + target.id.split('-')[5];
 
-        // Schedule the regular timer update every second
-        const timerInterval = setInterval(updateTimer, 1000);
+            // Store the value in session storage
+            sessionStorage.setItem(key, value);
+        });
+    });
 
-        function updateTimer(remainingTime = null) {
-            if (remainingTime === null) {
-                // Get the current time
-                const currentTime = new Date().getTime();
+    // Retrieve stored values on page load
+    window.addEventListener('load', function () {
+        tableInputs.forEach(function (input) {
+            // Generate a unique key for the session storage
+            var key = 'table-' + input.id.split('-')[1] + '-' + input.id.split('-')[3] + '-' + input.id.split('-')[5];
 
-                // Calculate the remaining time in milliseconds
-                remainingTime = targetTime - currentTime;
+            // Get the stored value from session storage
+            var value = sessionStorage.getItem(key);
+
+            if (value !== null) {
+                // Set the stored value to the input
+                input.value = value;
             }
+            input.style.border = 'none';
+        });
+    });
 
-            const timerElement = document.getElementById("timer");
 
-            if (remainingTime <= 0) {
-                // Stop the timer
-                clearInterval(timerInterval);
+</script>
+ <script>
+     // Retrieve the target time from the server-side session variable
+     const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();
 
-                // Update the timer display to show 00:00
-                timerElement.textContent = "00:00";
+     // Calculate the initial remaining time
+     const currentTime = new Date().getTime();
+     const remainingTime = targetTime - currentTime;
 
-                // Perform any desired actions when the timer ends
-                // (e.g., display a message, play a sound, etc.)
-                alert("Timer has ended!");
-            } else {
-                // Calculate the remaining minutes and seconds
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+     // Start the timer immediately with the initial remaining time
+     updateTimer(remainingTime);
 
-                // Format the remaining time as MM:SS
-                const formattedTime = padZero(minutes) + ":" + padZero(seconds);
+     // Schedule the regular timer update every second
+     const timerInterval = setInterval(updateTimer, 1000);
 
-                // Update the timer display
-                timerElement.textContent = formattedTime;
-            }
-        }
+     function updateTimer(remainingTime = null) {
+         if (remainingTime === null) {
+             // Get the current time
+             const currentTime = new Date().getTime();
 
-        // Helper function to pad single digits with leading zeros
-        function padZero(number) {
-            return number < 10 ? "0" + number : number;
-        }
+             // Calculate the remaining time in milliseconds
+             remainingTime = targetTime - currentTime;
+         }
 
-    </script>
+         const timerElement = document.getElementById("timer");
 
+         if (remainingTime <= 0) {
+             // Stop the timer
+             clearInterval(timerInterval);
+
+             // Update the timer display to show 00:00
+             timerElement.textContent = "00:00";
+
+             // Perform any desired actions when the timer ends
+             // (e.g., display a message, play a sound, etc.)
+             alert("Timer has ended!");
+         } else {
+             // Calculate the remaining minutes and seconds
+             const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+             const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+             // Format the remaining time as MM:SS
+             const formattedTime = padZero(minutes) + ":" + padZero(seconds);
+
+             // Update the timer display
+             timerElement.textContent = formattedTime;
+         }
+     }
+
+     // Helper function to pad single digits with leading zeros
+     function padZero(number) {
+         return number < 10 ? "0" + number : number;
+     }
+
+ </script>  
 <script>
     // Function to save the text in the text boxes
     function saveText() {
@@ -385,31 +449,22 @@ color: #FFFFFF;
     }
 
     // Call the loadText function when the page is loaded
-    window.onload = loadText;
+    window.addEventListener('load', loadText);
 
-    // Call the saveText function when the form is submitted or when the user leaves the page
-    window.onbeforeunload = saveText;
+    // Call the saveText function when the form is submitted
+    document.addEventListener('submit', saveText);
+
+    // Call the saveText function when the user leaves the page
+    window.addEventListener('beforeunload', saveText);
+
+    // Call the saveText function when the textbox value changes
+    var textboxes = document.getElementsByClassName('answer');
+    for (var i = 0; i < textboxes.length; i++) {
+        textboxes[i].addEventListener('input', saveText);
+    }
 </script>
 
-  
-
-         </div>
-
-
-                        
-
-                        
-                        <!-- content-wrapper ends -->
-                       
-                    </div>
-                <!-- main-panel ends -->
-            </div>
-            <!-- page-body-wrapper ends -->
-       
-        <!-- container-scroller -->
-        <!-- plugins:js -->
-        <script src="vendors/js/vendor.bundle.base.js"></script>
-        <!-- endinject -->
+                    <!-- endinject -->
         <!-- Plugin js for this page -->
         <script src="vendors/chart.js/Chart.min.js"></script>
         <script src="vendors/datatables.net/jquery.dataTables.js"></script>
@@ -441,4 +496,5 @@ color: #FFFFFF;
 
 </body>
 </html>
+
 

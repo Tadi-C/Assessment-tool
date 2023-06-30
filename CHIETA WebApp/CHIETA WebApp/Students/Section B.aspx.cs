@@ -118,13 +118,22 @@ namespace CHIETA_WebApp.Students
                 connectionXoption.Close();
             }
             
-            qs = GetQuestions(count);
-            Repeater1.DataSource = qs;
-            Repeater1.DataBind();
-            
-            sXqs = GetSelectXQuestions(selectXcount, count);
-            Repeater2.DataSource = sXqs;
-            Repeater2.DataBind();
+           
+
+            if (selectXcount == 0 && count == 0)
+            {
+                Response.Redirect("Section C.aspx");
+            }
+            else
+            {
+                qs = GetQuestions(count);
+                Repeater1.DataSource = qs;
+                Repeater1.DataBind();
+
+                sXqs = GetSelectXQuestions(selectXcount, count);
+                Repeater2.DataSource = sXqs;
+                Repeater2.DataBind();
+            }
 
 
         }
