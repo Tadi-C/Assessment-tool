@@ -4,6 +4,7 @@
 <html>
 <head>
     <!-- Required meta tags -->
+    <link href="css/Joses%20styles.css" rel="stylesheet" />
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>    
     <!-- plugins:css -->
@@ -175,23 +176,64 @@ color: #FFFFFF;
 }
 
 .progress {
-  width: 75%;
-  height: 100%;
-  background-color: #411f51;
-  position: absolute;
-  top: 0;
-  left: 0;
- 
-  background: repeating-linear-gradient(-45deg, #411f51 0 42px,#e8e8e8 0 50px) left/200% 100%;
-  animation: i3 16s infinite linear;
-  border-radius: 10px;
-  border: 1px solid #766DF4;
+width: 75%;
+    height: 100%;
+    background-color: #411f51;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: repeating-linear-gradient(41deg, #411f51 0 42px,#e8e8e8 0 50px) right/200% 100%;
+    animation: i3 25s infinite linear;
+    border-radius: 10px;
+    border: 1px solid #766DF4;
 }
 
-@keyframes i3 {
-  100% {
-    background-position: right
-  }
+            @keyframes i3 {
+                100% {
+                    background-position: left
+                }
+            
+            }
+.popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 300px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+nav {
+  background-color: #f2f2f2;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display:flex;
+  justify-content:center;
+}
+
+nav li {
+  display: inline;
+  padding: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+section {
+  padding: 20px;
+}
+
         
     </style>
 
@@ -303,9 +345,105 @@ color: #FFFFFF;
                  
                  <a class="button2" href="Section C.aspx" > Back!
                  </a>
-                 <a class="button1" href="Assessments.aspx" > Submit!
+                 <a class="button1" id="myButton"  > Submit!
                  </a>
              </div>
+    <div class="popup" id="popupMessage">
+    <p>You have completed the test!</p>
+     <div style="display:flex;justify-content:space-between;padding:25px 25px;">
+                 
+                 <a class="button2" style="width:40%;height:20%;font-size:70%" id="back"  > Back!
+                 </a>
+                 <a class="button1" style="width:45%;height:20%;font-size:70%" href="Assessments.aspx" > Submit!
+                 </a>
+             </div>
+  </div>
+                                                                          <nav>
+    <ul>
+      <li><a  href="Section A.aspx">Section A</a></li>
+      <li><a href="Section B.aspx">Section B</a></li>
+      <li><a href="Section C.aspx">Section C</a></li>
+      <li><a style="color:darkgoldenrod" href="Section D.aspx">Section D</a></li>
+    </ul>
+  </nav>
+                            <div id="loader" class="loader">
+  <!-- Your SVG loader code goes here -->
+        <svg xmlns="http://www.w3.org/2000/svg" height="200px" width="200px" viewBox="0 0 200 200" class="pencil">
+	<defs>
+		<clipPath id="pencil-eraser">
+			<rect height="30" width="30" ry="5" rx="5"></rect>
+		</clipPath>
+	</defs>
+	<circle transform="rotate(-113,100,100)" stroke-linecap="round" stroke-dashoffset="439.82" stroke-dasharray="439.82 439.82" stroke-width="2" stroke="currentColor" fill="none" r="70" class="pencil__stroke"></circle>
+	<g transform="translate(100,100)" class="pencil__rotate">
+		<g fill="none">
+			<circle transform="rotate(-90)" stroke-dashoffset="402" stroke-dasharray="402.12 402.12" stroke-width="30" stroke="hsl(223,90%,50%)" r="64" class="pencil__body1"></circle>
+			<circle transform="rotate(-90)" stroke-dashoffset="465" stroke-dasharray="464.96 464.96" stroke-width="10" stroke="hsl(223,90%,60%)" r="74" class="pencil__body2"></circle>
+			<circle transform="rotate(-90)" stroke-dashoffset="339" stroke-dasharray="339.29 339.29" stroke-width="10" stroke="hsl(223,90%,40%)" r="54" class="pencil__body3"></circle>
+		</g>
+		<g transform="rotate(-90) translate(49,0)" class="pencil__eraser">
+			<g class="pencil__eraser-skew">
+				<rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)"></rect>
+				<rect clip-path="url(#pencil-eraser)" height="30" width="5" fill="hsl(223,90%,60%)"></rect>
+				<rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
+				<rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
+				<rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
+				<rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
+				<rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
+			</g>
+		</g>
+		<g transform="rotate(-90) translate(49,-30)" class="pencil__point">
+			<polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)"></polygon>
+			<polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)"></polygon>
+			<polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)"></polygon>
+		</g>
+	</g>
+</svg>
+</div>
+
+    <script>
+        window.addEventListener('load', function () {
+            var loader = document.getElementById('loader');
+            loader.classList.add('show'); // Show the loader when the page finishes loading
+
+            // Remove the 'show' class after a certain delay (e.g., 3 seconds)
+            setTimeout(function () {
+                loader.classList.remove('show');
+            }, 1000); // Adjust the delay as needed
+        });
+    </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var button = document.getElementById('myButton');
+        var popup = document.getElementById('popupMessage');
+        var backButton = document.getElementById('back');
+
+        button.addEventListener('click', function () {
+            popup.style.display = 'block';
+        });
+
+        // Close the pop-up when "Back!" is clicked
+        backButton.addEventListener('click', function () {
+            popup.style.display = 'none';
+        });
+
+        // Detect the back button press
+        window.addEventListener('popstate', function () {
+            if (popup.style.display === 'block') {
+                popup.style.display = 'none';
+            }
+        });
+
+        // Store the state in the browser history
+        button.addEventListener('click', function () {
+            history.pushState(null, null, '');
+        });
+    });
+
+
+</script>
+
+
     <script>
         // Retrieve the target time from the server-side session variable
         const targetTime = new Date('<%= Session["TargetTime"] %>').getTime();

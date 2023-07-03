@@ -4,6 +4,7 @@
 <html>
 <head>
     <!-- Required meta tags -->
+    <link href="css/Joses%20styles.css" rel="stylesheet" />
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>    
     <!-- plugins:css -->
@@ -201,26 +202,48 @@ color: #FFFFFF;
 }
 
 .progress {
-  width: 50%;
-  height: 100%;
-  background-color: #411f51;
-  position: absolute;
-  top: 0;
-  left: 0;
-
-
-  background: repeating-linear-gradient(-45deg, #411f51 0 42px,#e8e8e8 0 50px) left/200% 100%;
-  animation: i3 10s infinite linear;
-  border-radius: 10px;
-  border: 1px solid #766DF4;
+width: 50%;
+    height: 100%;
+    background-color: #411f51;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: repeating-linear-gradient(41deg, #411f51 0 42px,#e8e8e8 0 50px) right/200% 100%;
+    animation: i3 18s infinite linear;
+    border-radius: 10px;
+    border: 1px solid #766DF4;
 }
 
             @keyframes i3 {
                 100% {
-                    background-position: right
+                    background-position: left
                 }
             }
+nav {
+  background-color: #f2f2f2;
+}
 
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display:flex;
+  justify-content:center;
+}
+
+nav li {
+  display: inline;
+  padding: 10px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+}
+
+section {
+  padding: 20px;
+}
         
     </style>
 
@@ -336,7 +359,61 @@ color: #FFFFFF;
                  <a class="button1" href="Section D.aspx" > Next!
                  </a>
              </div>
+                                                                          <nav>
+    <ul>
+      <li><a href="Section A.aspx">Section A</a></li>
+      <li><a href="Section B.aspx">Section B</a></li>
+      <li><a style="color:darkgoldenrod" href="Section C.aspx">Section C</a></li>
+      <li><a href="Section D.aspx">Section D</a></li>
+    </ul>
+  </nav>
                         </div>
+                        <div id="loader" class="loader">
+  <!-- Your SVG loader code goes here -->
+        <svg xmlns="http://www.w3.org/2000/svg" height="200px" width="200px" viewBox="0 0 200 200" class="pencil">
+	<defs>
+		<clipPath id="pencil-eraser">
+			<rect height="30" width="30" ry="5" rx="5"></rect>
+		</clipPath>
+	</defs>
+	<circle transform="rotate(-113,100,100)" stroke-linecap="round" stroke-dashoffset="439.82" stroke-dasharray="439.82 439.82" stroke-width="2" stroke="currentColor" fill="none" r="70" class="pencil__stroke"></circle>
+	<g transform="translate(100,100)" class="pencil__rotate">
+		<g fill="none">
+			<circle transform="rotate(-90)" stroke-dashoffset="402" stroke-dasharray="402.12 402.12" stroke-width="30" stroke="hsl(223,90%,50%)" r="64" class="pencil__body1"></circle>
+			<circle transform="rotate(-90)" stroke-dashoffset="465" stroke-dasharray="464.96 464.96" stroke-width="10" stroke="hsl(223,90%,60%)" r="74" class="pencil__body2"></circle>
+			<circle transform="rotate(-90)" stroke-dashoffset="339" stroke-dasharray="339.29 339.29" stroke-width="10" stroke="hsl(223,90%,40%)" r="54" class="pencil__body3"></circle>
+		</g>
+		<g transform="rotate(-90) translate(49,0)" class="pencil__eraser">
+			<g class="pencil__eraser-skew">
+				<rect height="30" width="30" ry="5" rx="5" fill="hsl(223,90%,70%)"></rect>
+				<rect clip-path="url(#pencil-eraser)" height="30" width="5" fill="hsl(223,90%,60%)"></rect>
+				<rect height="20" width="30" fill="hsl(223,10%,90%)"></rect>
+				<rect height="20" width="15" fill="hsl(223,10%,70%)"></rect>
+				<rect height="20" width="5" fill="hsl(223,10%,80%)"></rect>
+				<rect height="2" width="30" y="6" fill="hsla(223,10%,10%,0.2)"></rect>
+				<rect height="2" width="30" y="13" fill="hsla(223,10%,10%,0.2)"></rect>
+			</g>
+		</g>
+		<g transform="rotate(-90) translate(49,-30)" class="pencil__point">
+			<polygon points="15 0,30 30,0 30" fill="hsl(33,90%,70%)"></polygon>
+			<polygon points="15 0,6 30,0 30" fill="hsl(33,90%,50%)"></polygon>
+			<polygon points="15 0,20 10,10 10" fill="hsl(223,10%,10%)"></polygon>
+		</g>
+	</g>
+</svg>
+</div>
+
+    <script>
+        window.addEventListener('load', function () {
+            var loader = document.getElementById('loader');
+            loader.classList.add('show'); // Show the loader when the page finishes loading
+
+            // Remove the 'show' class after a certain delay (e.g., 3 seconds)
+            setTimeout(function () {
+                loader.classList.remove('show');
+            }, 1000); // Adjust the delay as needed
+        });
+    </script>
 <script>
     // Retrieve the table inputs within the repeater
     var tableInputs = document.querySelectorAll('.table-input');
